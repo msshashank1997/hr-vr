@@ -1,0 +1,147 @@
+<!-- File: c:/Users/user/CascadeProjects/hr-copilot/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Chatbot - Candidate Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #f4f6f9; 
+            padding-top: 50px;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 form-container">
+                <h2 class="text-center mb-4">HR Chatbot - Candidate Application</h2>
+                <form id="candidateForm">
+                    <!-- Personal Information -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="mobile" class="form-label">Mobile Number</label>
+                            <input type="tel" class="form-control" id="mobile" name="mobile" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email ID</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Job Application Details -->
+                    <div class="mb-3">
+                        <label for="post_applied" class="form-label">Post Applied For</label>
+                        <input type="text" class="form-control" id="post_applied" name="post_applied" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="tenth_marks" class="form-label">10th Board Marks (%)</label>
+                            <input type="number" class="form-control" id="tenth_marks" name="tenth_marks" min="0" max="100" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="parents_income" class="form-label">Parents Annual Income</label>
+                            <input type="number" class="form-control" id="parents_income" name="parents_income" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="General">General</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
+                                <option value="OBC">OBC</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="religion" class="form-label">Religion</label>
+                            <input type="text" class="form-control" id="religion" name="religion" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="interests" class="form-label">Major Interests and Hobbies</label>
+                        <textarea class="form-control" id="interests" name="interests" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="future_vision" class="form-label">Where do you see yourself after 5 years?</label>
+                        <textarea class="form-control" id="future_vision" name="future_vision" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="additional_info" class="form-label">Any Other Information</label>
+                        <textarea class="form-control" id="additional_info" name="additional_info" rows="3"></textarea>
+                    </div>
+                    
+                    <!-- Conversation History (Hidden in this example) -->
+                    <input type="hidden" id="conversation_history" name="conversation_history">
+                    
+                    <!-- Signature Upload -->
+                    <div class="mb-3">
+                        <label for="signature" class="form-label">Upload Signature</label>
+                        <input type="file" class="form-control" id="signature" name="signature" accept="image/*" required>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="confirm_details" required>
+                        <label class="form-check-label" for="confirm_details">
+                            I confirm that all details provided are correct
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('candidateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Create FormData object
+            const formData = new FormData(this);
+            
+            // Send form data to backend
+            fetch('/submit_application', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Display evaluation results
+                    alert('Application Submitted Successfully!\n\nEvaluation:\n' + data.evaluation);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the application.');
+            });
+        });
+    </script>
+</body>
+</html>
