@@ -26,3 +26,6 @@ setx AZURE_OPENAI_API_KEY "your_actual_api_key"
 setx AZURE_OPENAI_ENDPOINT "your_actual_endpoint"
 setx AZURE_OPENAI_DEPLOYMENT_NAME "your_deployment_name"
 ```
+
+# Validate environment variables
+Ensure that the environment variables `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, and `AZURE_OPENAI_DEPLOYMENT_NAME` are correctly set in the `.env` file. Verify that the values in the `.env` file are correct and match the actual Azure OpenAI service configuration.

@@ -8,6 +8,13 @@ import logging
 # Load environment variables
 load_dotenv()
 
+# Validate environment variables
+required_env_vars = ["AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_DEPLOYMENT_NAME"]
+missing_env_vars = [var for var in required_env_vars if not os.getenv(var)]
+
+if missing_env_vars:
+    raise EnvironmentError(f"Missing required environment variables: {', '.join(missing_env_vars)}")
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -24,6 +31,7 @@ try:
     
     # Deployment name for the model
     DEPLOYMENT_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-4")
+    logger.info("Azure OpenAI client configured successfully.")
 except Exception as e:
     logger.error(f"Azure OpenAI Configuration Error: {e}")
     DEPLOYMENT_NAME = None
